@@ -1,0 +1,30 @@
+{
+  "name": "secureretailapp",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "async": "^2.6.0",
+    "async-waterfall": "^0.1.5",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "~1.18.2",
+    "config": "^1.30.0",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
+    "debug": "~2.6.9",
+    "express": "~4.15.5",
+    "express-async-handler": "^1.1.1",
+    "express-rest-response": "^1.2.0",
+    "express-session": "^1.15.6",
+    "jade": "~1.11.0",
+    "mongoose": "^4.13.12",
+    "morgan": "~1.9.0",
+    "nodemailer": "^4.6.3",
+    "passport": "^0.4.0",
+    "passport-json": "^1.2.0",
+    "passport-local": "^1.0.0",
+    "serve-favicon": "~2.4.5"
+  }
+}
