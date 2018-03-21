@@ -35,10 +35,6 @@ passport.use(
   })
 );
 
-router.get("/", (req, res, next) => {
-  console.log(1);
-});
-
 router.post("/login", (req, res, next) => {
   if (req.session.user) {
     return res.send(400, { message: "User already Logged In" });
@@ -55,12 +51,16 @@ router.post("/login", (req, res, next) => {
 });
 
 router.get("/logout", (req, res, next) => {
-  if (req.session.user) {
-    req.session.destroy();
-    let message = { message: "Sucessfully logged out" };
-    return res.send(200, message);
-  } else {
-    return res.send(400, "User not logged in");
+  try {
+    if (req.session.user) {
+      req.session.destroy();
+      let message = { message: "Sucessfully logged out" };
+      return res.send(200, message);
+    } else {
+      return res.send(400, "User not logged in");
+    }
+  } catch (e) {
+    next(e);
   }
 });
 
@@ -81,7 +81,6 @@ router.post(
             }
           );
         } else {
-          console.log("outside");
           reject({ message: "Please Check token and password" });
         }
       });
