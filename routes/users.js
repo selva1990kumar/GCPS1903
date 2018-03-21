@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 var passport = require("passport");
-var restResponse = require("express-rest-response");
 var JsonStrategy = require("passport-json").Strategy;
 var nodemailer = require("nodemailer");
 var session = require("express-session");
@@ -36,17 +35,21 @@ passport.use(
   })
 );
 
+router.get("/", (req, res, next) => {
+  console.log(1);
+});
+
 router.post("/login", (req, res, next) => {
   if (req.session.user) {
-    return res.rest.badRequest("User already Logged In");
+    return res.send(400, { message: "User already Logged In" });
   }
   passport.authenticate("json", function(err, user, info) {
     if (!user) {
-      return res.rest.badRequest(info);
+      return res.send(400, info);
     } else {
       let message = { message: "Sucessfully logged In", id: user._id };
       req.session.user = user;
-      return res.rest.success(message);
+      return res.send(300, message);
     }
   })(req, res, next);
 });
@@ -55,9 +58,9 @@ router.get("/logout", (req, res, next) => {
   if (req.session.user) {
     req.session.destroy();
     let message = { message: "Sucessfully logged out" };
-    res.rest.success(message);
+    return res.send(200, message);
   } else {
-    res.rest.badRequest("User not logged in");
+    return res.send(400, "User not logged in");
   }
 });
 
@@ -84,7 +87,7 @@ router.post(
       });
     }
     let token = await updatePassword();
-    return res.rest.success(token);
+    return res.send(200, token);
   })
 );
 
@@ -125,7 +128,7 @@ router.post(
     let updateTokenMessage = await updateToken(userData, UserDetails);
     let mailOptions = await emailTemplates.resetTemplate(userData, emailData);
     let emailSendSucess = await emailGenerator.emailSend(userData, mailOptions);
-    return res.rest.success(emailSendSucess);
+    return res.send(200, emailSendSucess);
   })
 );
 

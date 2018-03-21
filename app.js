@@ -7,7 +7,6 @@ var bodyParser = require("body-parser");
 var passport = require("passport");
 var users = require("./routes/users");
 var session = require("express-session");
-var restResponse = require("express-rest-response");
 var cors = require("cors");
 var app = express();
 var appConfig = require("./config/config").app;
@@ -31,7 +30,6 @@ var options = {
   showStatusCode: true,
   showDefaultMessage: true
 };
-app.use(restResponse(options));
 
 app.use(logger("dev"));
 app.use(bodyParser.json());
@@ -55,6 +53,6 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(appConfig.port, appConfig.host, () => {
-  console.log("app is running");
+  console.log("app is  successfully running");
 });
 module.exports = app;
